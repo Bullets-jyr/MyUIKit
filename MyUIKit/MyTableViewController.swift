@@ -9,21 +9,38 @@ import UIKit
 
 class MyTableViewController: UIViewController {
 
+    @IBOutlet weak var myTableView: UITableView!
+    let cellData = ["Hello TableView!", "This is UIKIT", "Welcome!"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .brown
+        configureTableView()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func configureTableView() {
+        myTableView.backgroundColor = .green
+        myTableView.delegate = self
+        myTableView.dataSource = self
     }
-    */
+}
 
+extension MyTableViewController: UITableViewDelegate {
+
+}
+
+extension MyTableViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cellData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
+        cell.textLabel?.text = cellData[indexPath.row]
+        return cell
+    }
 }

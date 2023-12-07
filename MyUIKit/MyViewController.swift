@@ -7,23 +7,38 @@
 
 import UIKit
 
+protocol AdminDelegate {
+    func doTask()
+}
+
 class MyViewController: UIViewController {
 
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var helloLabel: UILabel!
+    var admin: Admin?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .red
+        Admin(delegate: self)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func didTabButton(_ sender: Any) {
+//        helloLabel.text = "Hello Bullets!"
+        if let name = nameTextField.text {
+            helloLabel.text = "Hello \(name)!"
+        }
+        admin?.delegate.doTask()
     }
-    */
+}
 
+extension MyViewController: AdminDelegate {
+    func doTask() {
+        print("저 지금 일 잘하고 있습니다!")
+    }
+}
+
+// 위임을 하는 사람
+struct Admin {
+    var delegate: AdminDelegate
 }
